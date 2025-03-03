@@ -1,4 +1,4 @@
-# <P>arrot
+# \<P>arrot
 A simple text extraction tool for chromium.
 ## Installation
 Clone this repository, then open a chromium-based web browser.
