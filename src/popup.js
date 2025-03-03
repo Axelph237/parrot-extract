@@ -20,18 +20,22 @@ function extractText(selector) {
         frame = document;
     }
 
-    try {
-        let headingsAndParagraphs = frame.querySelectorAll("h1, h2, h3, p");
-        content = Array.from(headingsAndParagraphs)
-            .map(el => el.innerText)
-            .join('\n');
+    // try {
+    //     let headingsAndParagraphs = frame.querySelectorAll("h1, h2, h3, p");
+    //     content = Array.from(headingsAndParagraphs)
+    //         .map(el => el.innerText)
+    //         .join('\n');
+    //
+    //     chrome.runtime.sendMessage({ action: "displayContent", data: content });
+    // }
+    // catch (e) {
+    //     console.error("Error accessing frame content:", e);
+    //     chrome.runtime.sendMessage({ action: "displayContent", data: "Could not access element content." });
+    // }
 
-        chrome.runtime.sendMessage({ action: "displayContent", data: content });
-    }
-    catch (e) {
-        console.error("Error accessing frame content:", e);
-        chrome.runtime.sendMessage({ action: "displayContent", data: "Could not access element content." });
-    }
+    let content = frame.innerText;
+    chrome.runtime.sendMessage({ action: "displayContent", data: content });
+
 }
 
 // Display extracted text

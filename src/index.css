@@ -1,6 +1,9 @@
 body {
-    width: 500px;
-    min-height: 100px;
+    margin: 0;
+    padding: 0;
+    height: fit-content;
+    width: fit-content;
+
     background: black;
     color: white;
 
@@ -8,6 +11,8 @@ body {
     font-optical-sizing: auto;
     font-weight: 90;
     font-style: normal;
+
+    overflow: hidden;
 }
 
 /* User input */
@@ -49,12 +54,14 @@ input {
 }
 
 /* Page sections */
+#app {
+    display: flex;
+    width: 550px;
+    flex-direction: column;
+}
 #header {
-    top: 0;
-    left: 0;
     padding: 10px;
     gap: 25px;
-    position: fixed;
     background: rgba(25, 25, 25);
     width: 100%;
     display: flex;
@@ -64,11 +71,8 @@ input {
     box-shadow: 10px 0 3px black;
 }
 #toolbar {
-    bottom: 0;
-    left: 0;
     padding: 10px;
     gap: 25px;
-    position: fixed;
     background: rgba(25, 25, 25);
     width: 100%;
     display: flex;
@@ -78,7 +82,8 @@ input {
     box-shadow: -10px 0 3px black;
 }
 #content {
-    margin-bottom: 10px;
+    max-height: 400px;
+    overflow-y: auto;
     white-space: pre-wrap;
     color: white;
     display: flex;
@@ -92,9 +97,9 @@ input {
 /* Animations */
 @keyframes slideBg {
     from {
-        background-position: -1000px;
+        background-position: 1000px;
     }
     to {
-        background-position: 0px;
+        background-position: 0;
     }
 }
