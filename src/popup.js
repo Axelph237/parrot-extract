@@ -10,32 +10,48 @@ document.getElementById("extractBtn").addEventListener("click", async () => {
         func: extractText
     })
 })
-
 function extractText(selector) {
     let frame;
     if (selector) {
         frame = document.querySelector(selector);
-    }
-    else {
+    } else {
         frame = document;
     }
 
-    // try {
-    //     let headingsAndParagraphs = frame.querySelectorAll("h1, h2, h3, p");
-    //     content = Array.from(headingsAndParagraphs)
-    //         .map(el => el.innerText)
-    //         .join('\n');
-    //
-    //     chrome.runtime.sendMessage({ action: "displayContent", data: content });
-    // }
-    // catch (e) {
-    //     console.error("Error accessing frame content:", e);
-    //     chrome.runtime.sendMessage({ action: "displayContent", data: "Could not access element content." });
-    // }
+    try {
+        // Extract text from main document
+        let headingsAndParagraphs = frame.querySelectorAll("h1, h2, h3, p");
+        let content = Array.from(headingsAndParagraphs)
+            .map(el => el.innerText)
+            .join('\n');
 
-    let content = frame.innerText;
-    chrome.runtime.sendMessage({ action: "displayContent", data: content });
+        // Try to extract text from all accessible iframes
+        let iframes = document.querySelectorAll("iframe");
+        let iframePromises = Array.from(iframes).map(iframe => {
+            return new Promise(resolve => {
+                try {
+                    let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    let iframeText = Array.from(iframeDoc.querySelectorAll("h1, h2, h3, p"))
+                        .map(el => el.innerText)
+                        .join('\n');
+                    resolve(iframeText);
+                } catch (e) {
+                    console.warn("Could not access iframe:", e);
+                    resolve(""); // Prevent failure from stopping extraction
+                }
+            });
+        });
 
+        // Wait for all iframe extractions to complete
+        Promise.all(iframePromises).then(iframeContents => {
+            let fullContent = content + "\n" + iframeContents.join("\n");
+            chrome.runtime.sendMessage({ action: "displayContent", data: fullContent });
+        });
+
+    } catch (e) {
+        console.error("Error accessing frame content:", e);
+        chrome.runtime.sendMessage({ action: "displayContent", data: "Could not access element content." });
+    }
 }
 
 // Display extracted text
