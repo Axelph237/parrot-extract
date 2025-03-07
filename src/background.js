@@ -1,5 +1,6 @@
-chrome.runtime.onMessage.addListener((message, sender) => {
-    if (message.action === "displayContent") {
-        chrome.tabs.sendMessage(sender.tab.id, message);
-    }
+chrome.action.onClicked.addListener(async (tab) => {
+    await chrome.tabs.sendMessage(tab.id, { action: "manageToolbar", publicURL: chrome.runtime.getURL("public") });
 })
+
+
+

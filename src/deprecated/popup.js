@@ -1,5 +1,3 @@
-let content;
-
 document.getElementById("extractBtn").addEventListener("click", async () => {
     const selector = document.getElementById("selectorInput").value;
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -11,6 +9,7 @@ document.getElementById("extractBtn").addEventListener("click", async () => {
     })
 })
 function extractText(selector) {
+    console.log("Extracting text")
     let frame;
     if (selector) {
         frame = document.querySelector(selector);
@@ -83,3 +82,5 @@ document.getElementById("copyBtn").addEventListener("click", () => {
         alert("No text to copy.")
     }
 })
+
+

@@ -1,0 +1,35 @@
+.parrot_hover-highlight {
+    outline: 2px solid #ff5733 !important;
+    background-color: rgba(255, 87, 51, 0.2) !important;
+    transition: outline 0.1s ease-in-out !important;
+
+    border-radius: 0.5rem;
+}
+
+.parrot_selected-highlight {
+    /*background: #191919;*/
+    color: white !important;
+
+    /* Gradient */
+    border: 2px solid transparent;
+    background:
+            linear-gradient(to right, #191919, #191919),
+            linear-gradient(to right, red, orange, yellow, greenyellow, cornflowerblue, blueviolet, hotpink, red) 0 0 / 400% 100%;
+    background-clip: padding-box, border-box;
+
+    border-radius: 0.5rem;
+
+    animation: 15s parrot_slideBg linear infinite;
+}
+.parrot_selected-highlight * {
+    color: inherit !important;
+}
+
+@keyframes parrot_slideBg {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 400% 0;
+    }
+}

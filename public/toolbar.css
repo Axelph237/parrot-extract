@@ -1,0 +1,157 @@
+#parrot_iframe {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin: 10px;
+
+    width: fit-content;
+    height: fit-content;
+
+    border: 0;
+    outline: none;
+
+    z-index: 9999;
+}
+
+#parrot_toolbar {
+    width: fit-content;
+    height: fit-content;
+    padding: 8px;
+
+    border-radius: 1rem;
+
+    z-index: 9999;
+
+    background: rgba(25, 25, 25, 0.85);
+    backdrop-filter: blur(4px);
+    color: white;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    transition: all;
+    transition-duration: 300ms;
+
+    font-family: "Azeret Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 10;
+    font-style: normal;
+}
+
+#parrot_logo {
+    cursor: pointer;
+}
+
+/* User input */
+#parrot_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.parrot_input {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 2rem;
+    outline: none !important;
+    border: none;
+    background: black;
+    color: white;
+}
+
+.parrot_btn {
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 1rem;
+    border: 0;
+    background: #f53100;
+    outline: none;
+    color: black;
+    font-weight: bold;
+
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    gap: 6px;
+}
+.parrot_btn:hover {
+    background: linear-gradient(to right, red, orange, yellow, greenyellow, cornflowerblue, blueviolet, hotpink, red) 0 0 / 400% 100%;
+    animation: 15s parrot_slideBg linear infinite;
+}
+
+#parrot_copyBtn {
+    display: none;
+}
+
+.parrot_tooltip {
+    position: fixed;
+    transform: translate(-50%, 0);
+    transform-origin: -0%;
+    padding: 4px 8px;
+
+    border-radius: 1rem;
+    border: 2px solid transparent;
+    background:
+            linear-gradient(rgba(25, 25, 25, 0.80), rgba(25, 25, 25, 0.80)),
+            linear-gradient(to right, red, orange, yellow, greenyellow, cornflowerblue, blueviolet, hotpink, red) 0 0 / 400% 100%;
+    background-clip: padding-box, border-box;
+    backdrop-filter: blur(2px);
+    color: white;
+
+    overflow: hidden;
+
+    animation: 150ms parrot_tooltipPopIn ease-out, 15s parrot_slideBg linear infinite;
+
+    font-family: "Azeret Mono", monospace;
+    font-optical-sizing: auto;
+    font-size: small;
+    font-weight: 10;
+    font-style: normal;
+
+    z-index: 10000;
+}
+/*.parrot_tooltip::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    left: 50%;*/
+/*    top: 100%;*/
+/*    transform: translate(-50%, -50%);*/
+
+/*    width: 12px;*/
+/*    height: 12px;*/
+/*    clip-path: polygon(100% 50%, 50% 100%, 0 50%);*/
+
+/*    background: inherit;*/
+/*    backdrop-filter: blur(4px);*/
+/*}*/
+
+@keyframes parrot_slideBg {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 400% 0;
+    }
+}
+
+@keyframes parrot_tooltipPopIn {
+    0% {
+        transform: scale(0.5) translateX(-50%) translateY(10px);
+        opacity: 0;
+    }
+    80% {
+        transform: scale(1.1) translateX(-50%) translateY(0px);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) translateX(-50%);
+    }
+}

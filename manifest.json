@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "</P>arrot Extract",
-  "version": "1.0",
+  "name": "<P>arrot Extract",
+  "version": "2.0.0",
   "description": "Extracts textual data from website for easy reading, copying, and pasting.",
   "permissions": ["scripting", "activeTab"],
   "host_permissions": ["<all_urls>"],
   "action": {
-    "default_popup": "src/popup.html",
+    "default_title": "<P>arrot",
     "default_icon": {
       "16": "public/icon16.png",
       "32": "public/icon32.png",
@@ -15,13 +15,20 @@
     }
   },
   "background": {
-    "service_worker": "src/background.js"
+    "service_worker": "src/background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/highlight.js"],
-      "css": ["src/highlight.css"]
+      "css": ["public/highlight.css", "public/toolbar.css"],
+      "js": ["src/ui/toolbar.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["public/*"],
+      "matches": ["<all_urls>"]
     }
   ]
 }
