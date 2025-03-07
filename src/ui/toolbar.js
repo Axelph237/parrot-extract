@@ -57,7 +57,7 @@ function openToolbar(publicURL) {
                 <img src="${publicURL}/icon48.png" id="parrot_logo" width="32" height="32" alt="parrot logo" />
                 <div id="parrot_buttons">
                     <button id="parrot_selectBtn" class="parrot_btn">
-                        <img src="${publicURL}/select-area.svg" alt="select" width="20" height="20"/>
+                        <img src="${publicURL}/pointer.svg" alt="select" width="20" height="20"/>
                     </button>
                     <button id="parrot_copyBtn" class="parrot_btn">
                         <img src="${publicURL}/copy.svg" alt="select" width="20" height="20"/>
@@ -149,6 +149,10 @@ function openToolbar(publicURL) {
             else
                 removeTooltip("copy text", event.target);
         });
+
+        displayAlert("hello!");
+
+        setTimeout(exhaustAlert, 1500);
     }
     // Select element action
     window.addEventListener("click", handleClick);
@@ -285,13 +289,20 @@ function handleCopy() {
     if (content) {
         navigator.clipboard.writeText(content).then(() => {
             console.log("Content updated")
+            displayAlert("copied!");
+
+            setTimeout(exhaustAlert, 1500);
         }).catch((e) => {
             console.error("Failed to copy text:", e);
-            alert("Failed to copy data.");
+            displayAlert("couldn't copy that");
+
+            setTimeout(exhaustAlert, 1500);
         });
     }
     else {
-        alert("No text to copy.")
+        displayAlert("no text to copy");
+
+        setTimeout(exhaustAlert, 1500);
     }
 }
 
@@ -371,4 +382,47 @@ function displayTooltip(msg, source) {
 function removeTooltip(msg, source) {
     const tooltip = document.getElementById("parrot_tooltip-" + msg + "-" + source.id);
     if (tooltip) document.body.removeChild(tooltip);
+}
+
+/**
+ * Alerts only come from the logo.
+ */
+function displayAlert(msg) {
+    if (!msg) return;
+
+    const logo = iframeDocRef.getElementById("parrot_logo");
+    const yOffset = 35;
+
+    const alert = document.createElement("div");
+    alert.id = "parrot_alert";
+    alert.classList.add("parrot_open");
+    alert.innerText = msg;
+
+    const logoDims = logo.getBoundingClientRect();
+    const iframeDims = document.getElementById("parrot_iframe").getBoundingClientRect();
+    alert.style.left = (logoDims.left + iframeDims.left + (logoDims.width / 2)) + "px";
+    alert.style.top = (iframeDims.top - yOffset) + "px";
+
+    document.body.appendChild(alert);
+
+    wobbleAnim(logo);
+}
+
+function exhaustAlert() {
+    const alert = document.getElementById("parrot_alert");
+    if (alert) {
+        alert.classList.remove("parrot_open");
+        alert.offsetHeight;
+        alert.classList.add("parrot_close");
+        setTimeout(() => {
+            document.body.removeChild(alert);
+        }, 500);
+    }
+}
+
+function wobbleAnim(elem) {
+    elem.classList.add("parrot_wobble");
+    setTimeout(() => {
+        elem.classList.remove("parrot_wobble");
+    }, 600)
 }
