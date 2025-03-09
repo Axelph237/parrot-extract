@@ -117,7 +117,7 @@
     z-index: 10000;
 }
 
-#parrot_alert {
+.parrot_alert {
     position: fixed;
     transform: translate(-50%, 0);
     transform-origin: -0%;
@@ -136,7 +136,7 @@
 
     z-index: 10000;
 }
-#parrot_alert::after {
+.parrot_alert::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -151,11 +151,11 @@
     backdrop-filter: blur(4px);
 }
 
-#parrot_alert.parrot_open {
+.parrot_alert.parrot_open {
     animation: 150ms parrot_tooltipPopIn ease-out;
 }
 
-#parrot_alert.parrot_close {
+.parrot_alert.parrot_close {
     animation: 150ms parrot_tooltipPopIn ease-out reverse forwards;
 }
 

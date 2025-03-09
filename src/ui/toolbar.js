@@ -151,8 +151,6 @@ function openToolbar(publicURL) {
         });
 
         displayAlert("hello!");
-
-        setTimeout(exhaustAlert, 1500);
     }
     // Select element action
     window.addEventListener("click", handleClick);
@@ -288,21 +286,18 @@ function extractText(target) {
 function handleCopy() {
     if (content) {
         navigator.clipboard.writeText(content).then(() => {
+            // Copy success
             console.log("Content updated")
             displayAlert("copied!");
-
-            setTimeout(exhaustAlert, 1500);
         }).catch((e) => {
+            // Copy error
             console.error("Failed to copy text:", e);
             displayAlert("couldn't copy that");
-
-            setTimeout(exhaustAlert, 1500);
         });
     }
     else {
+        // No content to copy
         displayAlert("no text to copy");
-
-        setTimeout(exhaustAlert, 1500);
     }
 }
 
@@ -390,11 +385,14 @@ function removeTooltip(msg, source) {
 function displayAlert(msg) {
     if (!msg) return;
 
+    const n = document.getElementsByClassName("parrot_alert").length;
+
     const logo = iframeDocRef.getElementById("parrot_logo");
     const yOffset = 35;
 
     const alert = document.createElement("div");
-    alert.id = "parrot_alert";
+    alert.id = "parrot_alert-" + n;
+    alert.classList.add("parrot_alert");
     alert.classList.add("parrot_open");
     alert.innerText = msg;
 
@@ -406,10 +404,15 @@ function displayAlert(msg) {
     document.body.appendChild(alert);
 
     wobbleAnim(logo);
+
+    setTimeout(() => {
+        exhaustAlert(alert);
+    }, 1500);
+
+    return alert;
 }
 
-function exhaustAlert() {
-    const alert = document.getElementById("parrot_alert");
+function exhaustAlert(alert) {
     if (alert) {
         alert.classList.remove("parrot_open");
         alert.offsetHeight;
