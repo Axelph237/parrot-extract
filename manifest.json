@@ -22,7 +22,7 @@
     {
       "matches": ["<all_urls>"],
       "css": ["public/highlight.css", "public/toolbar.css"],
-      "js": ["src/ui/toolbar.js"]
+      "js": ["src/toolbar.js"]
     }
   ],
   "web_accessible_resources": [
