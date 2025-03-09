@@ -71,7 +71,7 @@ function openToolbar(publicURL) {
     // Create a new iframe
     let iframe = document.createElement("iframe");
     iframe.id = "parrot_iframe";
-    iframe.classList.add("parrot_iframeWatched");
+    iframe.classList.add("parrot_iframeExcluded");
     iframe.srcdoc = parrot_html;
     iframe.style.visibility = "hidden";
 
@@ -193,6 +193,8 @@ function watchIFrames(publicURL) {
     const iframes = document.querySelectorAll("iframe");
 
     for (let i = 0; i < iframes.length; i++) {
+        if (iframes[i].classList.contains("parrot_iframeExcluded")) continue;
+
         try {
             let iframeDoc = iframes[i].contentDocument || iframes[i].contentWindow.document;
             // Exclude watched iframes
