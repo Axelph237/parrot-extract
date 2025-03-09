@@ -3,7 +3,7 @@ let toolbarOpen = false;
 let iframeDocRef = undefined;
 let content = undefined;
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request) => {
     toolbarOpen = !toolbarOpen;
     if (toolbarOpen) {
         // Open
@@ -71,6 +71,7 @@ function openToolbar(publicURL) {
     // Create a new iframe
     let iframe = document.createElement("iframe");
     iframe.id = "parrot_iframe";
+    iframe.classList.add("parrot_iframeWatched");
     iframe.srcdoc = parrot_html;
     iframe.style.visibility = "hidden";
 
@@ -159,6 +160,15 @@ function openToolbar(publicURL) {
     document.addEventListener("mousemove", handleHighlight);
     document.addEventListener("mouseout", handleUnhighlight);
 
+    const observer = new MutationObserver(() => {
+        watchIFrames(publicURL);
+    });
+    observer.observe(document.body, {
+        subtree: true,
+        childList: true,
+        attributes: false
+    })
+
     // Add toolbar to DOM
     document.body.appendChild(iframe);
 }
@@ -179,11 +189,16 @@ let selecting = false;
 let highlightedElement = undefined;
 
 function watchIFrames(publicURL) {
+    console.log("watching iframes");
     const iframes = document.querySelectorAll("iframe");
 
     for (let i = 0; i < iframes.length; i++) {
         try {
             let iframeDoc = iframes[i].contentDocument || iframes[i].contentWindow.document;
+            // Exclude watched iframes
+            if (iframeDoc.body.classList.contains("parrot_iframeWatched")) continue;
+
+            iframeDoc.body.classList.add("parrot_iframeWatched");
             iframeDoc.addEventListener("mouseover", handleHighlight);
             iframeDoc.addEventListener("mouseout", handleUnhighlight);
             iframeDoc.addEventListener("click", handleClick);
