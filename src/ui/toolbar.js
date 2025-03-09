@@ -79,7 +79,6 @@ function openToolbar(publicURL) {
         iframeDocRef = iframe.contentDocument || iframe.contentWindow.document;
 
         const resizeIFrame= () => {
-            console.log("resizing iframe");
             iframe.style.width = iframeDocRef.body.scrollWidth + "px";
             iframe.style.height = iframeDocRef.body.scrollHeight + "px";
         }
@@ -189,7 +188,6 @@ let selecting = false;
 let highlightedElement = undefined;
 
 function watchIFrames(publicURL) {
-    console.log("watching iframes");
     const iframes = document.querySelectorAll("iframe");
 
     for (let i = 0; i < iframes.length; i++) {
@@ -304,7 +302,6 @@ function handleCopy() {
     if (content) {
         navigator.clipboard.writeText(content).then(() => {
             // Copy success
-            console.log("Content updated")
             displayAlert("copied!");
         }).catch((e) => {
             // Copy error
