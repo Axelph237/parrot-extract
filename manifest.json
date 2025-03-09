@@ -21,7 +21,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["public/highlight.css", "public/toolbar.css"],
+      "css": ["public/styles/highlight.css", "public/styles/toolbar.css"],
       "js": ["src/toolbar.js"]
     }
   ],

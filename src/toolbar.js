@@ -40,7 +40,7 @@ function openToolbar(publicURL) {
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-            <link href="${publicURL}/toolbar.css" rel="stylesheet"/>
+            <link href="${publicURL}/styles/toolbar.css" rel="stylesheet"/>
             <style>
                 body {
                     margin: 0;
@@ -206,7 +206,7 @@ function watchIFrames(publicURL) {
             // Inject highlight.css into iframe
             const styles = iframeDoc.createElement("link");
             styles.rel = "stylesheet";
-            styles.href = publicURL + "/highlight.css";
+            styles.href = publicURL + "/styles/highlight.css";
             iframeDoc.head.appendChild(styles);
         } catch (error) {
             console.warn("Cross-origin iframe: Cannot access content.");
