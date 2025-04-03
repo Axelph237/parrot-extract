@@ -3,7 +3,8 @@ let toolbarOpen = false;
 let iframeDocRef = undefined;
 let content = undefined;
 
-chrome.runtime.onMessage.addListener((request) => {
+function onMessageListener(request) {
+    console.log("Message received")
     toolbarOpen = !toolbarOpen;
     if (toolbarOpen) {
         // Open
@@ -17,7 +18,9 @@ chrome.runtime.onMessage.addListener((request) => {
         // Close
         removeToolbar();
     }
-})
+}
+const browserAPI = typeof chrome !== 'undefined' ? chrome : browser;
+browserAPI.runtime.onMessage.addListener(onMessageListener);
 
 // ---- UI FUNCTION ----
 //
@@ -42,7 +45,11 @@ function openToolbar(publicURL) {
             <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
             <link href="${publicURL}/styles/toolbar.css" rel="stylesheet"/>
             <style>
+                html {
+                    background: transparent;
+                }
                 body {
+                    background: transparent;
                     margin: 0;
                     padding: 0 6px 6px;
                     overflow: hidden;
@@ -74,6 +81,7 @@ function openToolbar(publicURL) {
     iframe.classList.add("parrot_iframeExcluded");
     iframe.srcdoc = parrot_html;
     iframe.style.visibility = "hidden";
+    iframe.style.background = "transparent";
 
     iframe.onload = () => {
         iframeDocRef = iframe.contentDocument || iframe.contentWindow.document;
